@@ -1,0 +1,88 @@
+:root{--navy:#0f1b2d;--navy-2:#16263d;--ink:#1c2533;--muted:#5b6778;--line:#e3e7ee;--bg-alt:#f5f7fa;--accent:#14b8a6;--accent-dark:#0f8f82;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);line-height:1.6;background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+.site-header{position:sticky;top:0;z-index:10;background:rgba(15,27,45,.96);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{color:#fff;font-weight:700;font-size:1.15rem;text-decoration:none;letter-spacing:-.01em}
+.logo span{color:var(--accent);font-weight:600}
+nav{display:flex;gap:28px;align-items:center}
+nav a{color:#c9d2df;text-decoration:none;font-size:.92rem;font-weight:500}
+nav a:hover{color:#fff}
+.nav-cta{border:1px solid rgba(255,255,255,.25);padding:7px 14px;border-radius:999px;color:#fff!important}
+.hero{background:radial-gradient(1000px 500px at 85% -10%,rgba(20,184,166,.18),transparent 60%),var(--navy);color:#fff;padding:120px 0 110px}
+.hero h1{font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.12;letter-spacing:-.025em;max-width:820px;font-weight:700}
+.lead{font-size:1.15rem;color:#c3ccd9;max-width:640px;margin-top:22px}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;font-weight:600;color:var(--accent);margin-bottom:14px}
+.hero-actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none;font-size:.95rem}
+.btn-primary{background:var(--accent);color:#06201d}
+.btn-primary:hover{background:#2dd4bf}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
+.section{padding:96px 0}
+.section-alt{background:var(--bg-alt)}
+.section h2{font-size:clamp(1.6rem,3.2vw,2.2rem);letter-spacing:-.02em;line-height:1.2;max-width:720px}
+.section-lead{color:var(--muted);margin-top:12px;max-width:640px}
+.pillars,.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px}
+.pillar{padding:28px;border:1px solid var(--line);border-radius:var(--radius)}
+.pillar-num{font-weight:700;color:var(--accent-dark);font-size:.9rem;margin-bottom:18px}
+.pillar h3,.card h3{font-size:1.2rem;margin-bottom:10px;letter-spacing:-.01em}
+.pillar p,.card p{color:var(--muted);font-size:.97rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;position:relative}
+.card-tag{font-size:.75rem!important;text-transform:uppercase;letter-spacing:.1em;font-weight:600;color:var(--accent-dark)!important;margin-bottom:10px}
+.card-quote{font-style:italic;color:var(--ink)!important;margin-bottom:8px}
+.card-link{margin-top:auto;padding-top:20px;font-weight:600;color:var(--navy);text-decoration:none;font-size:.95rem}
+.card-link:hover{color:var(--accent-dark)}
+.placeholder-link{color:#9aa4b2}
+.card-soon{background:repeating-linear-gradient(135deg,#fff,#fff 12px,#fafbfc 12px,#fafbfc 24px);border-style:dashed}
+.card-soon .card-tag{color:var(--muted)!important}
+.badge{margin-top:auto;align-self:flex-start;background:var(--navy);color:#fff;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:999px;margin-top:20px}
+.pillars-2{grid-template-columns:repeat(2,1fr)}
+.founder{display:grid;grid-template-columns:180px 1fr;gap:48px;align-items:start}
+.founder-mark{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-2));color:var(--accent);display:grid;place-items:center;font-size:3rem;font-weight:700;letter-spacing:-.03em}
+.founder-role{color:var(--muted);margin:6px 0 18px;font-weight:500}
+.founder p{max-width:640px}
+.facts{list-style:none;margin-top:20px;display:grid;gap:10px}
+.facts li{padding-left:22px;position:relative}
+.facts li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.section-dark{background:var(--navy);color:#fff}
+.section-dark p{color:#c3ccd9}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.contact-list{list-style:none;display:grid;gap:14px}
+.contact-list li{display:flex;gap:16px;align-items:baseline;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1);color:#e6ebf2}
+.contact-list span{width:80px;flex-shrink:0;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#8b98ab}
+.contact-list a{color:#fff;text-decoration:none;font-weight:500}
+.contact-list a:hover{color:var(--accent)}
+.tbd{color:#f5b454;font-style:normal;font-size:.85rem;font-weight:600}
+.site-footer{background:#0a1320;color:#8b98ab;font-size:.88rem;padding:26px 0}
+.site-footer .container{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:860px){
+  .pillars,.cards{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+  .founder{grid-template-columns:1fr;gap:28px}
+  .founder-mark{width:120px;height:120px;font-size:2.2rem}
+}
+@media (max-width:640px){
+  nav a:not(.nav-cta){display:none}
+  .hero{padding:80px 0 72px}
+  .section{padding:68px 0}
+  .lead{font-size:1.05rem}
+}
+
+.contact-form{display:grid;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.contact-form label{display:grid;gap:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#8b98ab}
+.contact-form input,.contact-form select,.contact-form textarea{font:inherit;font-size:.95rem;text-transform:none;letter-spacing:normal;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:11px 13px}
+.contact-form select option{color:#1c2533}
+.contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent)}
+.contact-form button{border:0;cursor:pointer;justify-self:start}
+.form-note{font-size:.85rem;color:#8b98ab}
+@media (max-width:640px){.form-row{grid-template-columns:1fr}}
+
+.logo{display:inline-flex;align-items:center;gap:10px}
+.logo-mark{width:auto;height:44px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.form-status{min-height:1.2em;font-size:.9rem;color:var(--accent)}
+.founder-mark img{width:72%;height:auto}
