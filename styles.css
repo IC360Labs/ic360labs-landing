@@ -86,3 +86,23 @@ nav a:hover{color:#fff}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .form-status{min-height:1.2em;font-size:.9rem;color:var(--accent)}
 .founder-mark img{width:72%;height:auto}
+
+/* 2026-10-10 polish */
+.skip-link{position:absolute;left:-9999px;top:8px;z-index:20;background:#fff;color:var(--navy);padding:8px 14px;border-radius:8px;font-weight:600}
+.skip-link:focus{left:12px}
+#top{position:absolute;top:0}
+.hero-points{list-style:none;display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:44px;color:#9fb0c4;font-size:.9rem}
+.hero-points li{padding-left:18px;position:relative}
+.hero-points li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.card-feature{border-color:rgba(20,184,166,.45);box-shadow:0 10px 30px -18px rgba(15,27,45,.35)}
+.card-links{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:auto;padding-top:20px}
+.card-links .card-link{margin-top:0;padding-top:0}
+.partners{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+.partners p{color:var(--muted);max-width:620px}
+.partners p+p{margin-top:14px}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{color:#8b98ab;text-decoration:none}
+.footer-links a:hover{color:#fff}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn-primary:disabled{opacity:.6;cursor:default}
+@media (max-width:860px){.partners{grid-template-columns:1fr;gap:16px}}
