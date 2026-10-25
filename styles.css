@@ -122,3 +122,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .pb-btn:hover{background:#0f9f90}
 .pb-link{color:var(--fc-ink);font-family:Manrope,sans-serif;font-weight:700;font-size:.92rem;text-decoration:none;border-bottom:2px solid var(--fc-gold)}
 .pb-link:hover{color:#0f9f90}
+/* mobile overflow fix: let contact grid/inputs shrink */
+.contact>*,.form-row>*{min-width:0}
+.contact-form input,.contact-form select,.contact-form textarea{width:100%;min-width:0}
