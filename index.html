@@ -168,28 +168,30 @@
           <h2>Let's talk.</h2>
           <p>Exploring AI, reviewing your technology, interested in FleetCifu, or a supplier who would like to work with us? Send a message and we'll reply by email.</p>
         </div>
-        <iframe name="zf-sink" id="zf-sink" class="hp" title="Form submission" aria-hidden="true" tabindex="-1"></iframe>
+        <iframe name="zf-sink" id="zf-sink" class="form-sink" title="Form submission" aria-hidden="true" tabindex="-1"></iframe>
         <form class="contact-form" id="contact-form" action="https://forms.zohopublic.com/ianic361/form/IC360WebsiteContact/formperma/ixqff5VGN-3F3wlj3-idNuO0l8W2hlaYBINlwpQxLTo/htmlRecords/submit" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" target="zf-sink">
           <input type="hidden" name="zf_referrer_name" value="">
           <input type="hidden" name="zf_redirect_url" value="">
           <input type="hidden" name="zc_gad" value="">
           <input type="text" name="website_hp" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
-          <div class="form-row">
-            <label>Name<input type="text" name="SingleLine" maxlength="255" autocomplete="name" required></label>
-            <label>Company<input type="text" name="SingleLine1" maxlength="255" autocomplete="organization"></label>
+          <div class="form-fields" id="form-fields">
+            <div class="form-row">
+              <label>Name<input type="text" name="SingleLine" maxlength="255" autocomplete="name" required></label>
+              <label>Company<input type="text" name="SingleLine1" maxlength="255" autocomplete="organization"></label>
+            </div>
+            <label>Email<input type="email" name="Email" maxlength="255" autocomplete="email" inputmode="email" required></label>
+            <label>I'm interested in
+              <select name="Dropdown">
+                <option value="-Select-" selected>Choose one</option>
+                <option value="AI adoption">AI adoption</option>
+                <option value="Technology consultancy">Technology consultancy</option>
+                <option value="Something else">Something else (FleetCifu, suppliers, partners)</option>
+              </select>
+            </label>
+            <label>Message<textarea name="MultiLine" rows="4" maxlength="65535" required></textarea></label>
+            <button type="submit" class="btn btn-primary" id="form-submit">Send message</button>
           </div>
-          <label>Email<input type="email" name="Email" maxlength="255" autocomplete="email" required></label>
-          <label>I'm interested in
-            <select name="Dropdown">
-              <option value="-Select-" selected>Choose one</option>
-              <option value="AI adoption">AI adoption</option>
-              <option value="Technology consultancy">Technology consultancy</option>
-              <option value="Something else">Something else (FleetCifu, suppliers, partners)</option>
-            </select>
-          </label>
-          <label>Message<textarea name="MultiLine" rows="4" maxlength="65535" required></textarea></label>
-          <button type="submit" class="btn btn-primary">Send message</button>
-          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <div id="form-status" class="form-result" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></div>
           <p class="form-note">We use your details only to reply to your enquiry. Based in Grand Cayman, Cayman Islands.</p>
         </form>
       </div>
@@ -203,16 +205,181 @@
     </div>
   </footer>
   <script>
-  (function(){
-    var f=document.getElementById('contact-form'),st=document.getElementById('form-status'),sink=document.getElementById('zf-sink'),sent=false;
-    f.addEventListener('submit',function(e){
-      if(f.website_hp.value){e.preventDefault();return;}
-      f.zf_referrer_name.value=location.href;
-      f.querySelector('button').disabled=true;st.textContent='Sending…';sent=true;
-    });
-    sink.addEventListener('load',function(){
-      if(!sent)return;sent=false;f.reset();f.querySelector('button').disabled=false;
-      st.textContent="Thanks, your message has been sent. We'll reply by email.";
+  (function () {
+    var form = document.getElementById('contact-form');
+    var status = document.getElementById('form-status');
+    var button = document.getElementById('form-submit');
+    var sink = document.getElementById('zf-sink');
+    var pending = false;
+    var renderToken = 0;
+    var BUTTON_LABEL = 'Send message';
+
+    function setButton(label, disabled) {
+      button.textContent = label;
+      button.disabled = disabled;
+    }
+
+    function show(kind, title, detail, offerAnother) {
+      var token = ++renderToken;
+      status.className = 'form-result is-visible form-result-' + kind;
+      status.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+      status.setAttribute('aria-live', kind === 'error' ? 'assertive' : 'polite');
+      window.setTimeout(function () {
+        if (token !== renderToken) return;
+        status.replaceChildren();
+        var titleEl = document.createElement('p');
+        titleEl.className = 'form-result-title';
+        titleEl.textContent = title;
+        status.appendChild(titleEl);
+        if (detail) {
+          var detailEl = document.createElement('p');
+          detailEl.className = 'form-result-detail';
+          detailEl.textContent = detail;
+          status.appendChild(detailEl);
+        }
+        if (offerAnother) {
+          var again = document.createElement('button');
+          again.type = 'button';
+          again.className = 'form-again';
+          again.textContent = 'Send another message';
+          again.addEventListener('click', resetForm);
+          status.appendChild(again);
+        }
+        if (kind !== 'pending') status.focus();
+      }, 30);
+    }
+
+    function resetForm() {
+      pending = false;
+      form.classList.remove('is-sent');
+      form.removeAttribute('aria-busy');
+      form.reset();
+      status.className = 'form-result';
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+      status.replaceChildren();
+      setButton(BUTTON_LABEL, false);
+      var name = form.querySelector('input[name="SingleLine"]');
+      if (name) name.focus();
+    }
+
+    function succeed() {
+      pending = false;
+      form.removeAttribute('aria-busy');
+      form.classList.add('is-sent');
+      form.reset();
+      setButton(BUTTON_LABEL, false);
+      show('success', 'Thanks, your message has been sent.', "We'll reply by email.", true);
+    }
+
+    function fail(detail) {
+      pending = false;
+      form.removeAttribute('aria-busy');
+      form.classList.remove('is-sent');
+      setButton(BUTTON_LABEL, false);
+      show('error', "We couldn't send your message.", detail || 'Check your connection and try again.', false);
+    }
+
+    function looksLikeZohoError(text) {
+      return /Error Occurred|Enter a value for this field|Enter a valid email/i.test(text || '');
+    }
+
+    function trimFields() {
+      Array.prototype.forEach.call(form.querySelectorAll('input[type="text"], input[type="email"], textarea'), function (el) {
+        el.value = el.value.trim();
+      });
+    }
+
+    function submitWithFetch() {
+      var data = new FormData(form);
+      data.delete('website_hp');
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var abortTimer = window.setTimeout(function () {
+        if (ctrl) ctrl.abort();
+      }, 20000);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors',
+        credentials: 'omit',
+        signal: ctrl ? ctrl.signal : undefined
+      }).then(function (res) {
+        window.clearTimeout(abortTimer);
+        // Zoho does not send CORS headers, so a completed POST is an opaque
+        // response (status 0) for both the thank-you page and a validation
+        // page. Required name, email, and message are checked before this
+        // request. A dropped connection rejects and is shown as an error.
+        if (res.type === 'opaque') {
+          succeed();
+          return null;
+        }
+        if (!res.ok) {
+          fail('The form service rejected the message. Please try again.');
+          return null;
+        }
+        return res.text().then(function (text) {
+          if (looksLikeZohoError(text)) fail('Please check your name, email, and message, then try again.');
+          else succeed();
+        });
+      }).catch(function () {
+        window.clearTimeout(abortTimer);
+        fail('Check your connection and try again.');
+      });
+    }
+
+    function watchIframe() {
+      var started = Date.now();
+      var done = false;
+      function finish(ok) {
+        if (done) return;
+        done = true;
+        window.clearInterval(poll);
+        if (ok) succeed();
+        else fail('Check your connection and try again.');
+      }
+      function tick() {
+        if (done) return;
+        var waited = Date.now() - started;
+        try {
+          var href = sink.contentWindow.location.href || '';
+          var text = (sink.contentDocument && sink.contentDocument.body && sink.contentDocument.body.innerText) || '';
+          if (/Thank you! Your response has been submitted/i.test(text)) finish(true);
+          else if (looksLikeZohoError(text)) finish(false);
+          else if (waited > 15000) finish(href === 'about:blank' ? false : true);
+        } catch (err) {
+          if (waited > 600) finish(true);
+        }
+      }
+      sink.addEventListener('load', tick);
+      var poll = window.setInterval(tick, 200);
+      window.setTimeout(function () { finish(false); }, 15000);
+    }
+
+    form.addEventListener('submit', function (e) {
+      if (form.website_hp && form.website_hp.value) {
+        e.preventDefault();
+        return;
+      }
+      trimFields();
+      if (!form.reportValidity()) {
+        e.preventDefault();
+        return;
+      }
+      if (pending) {
+        e.preventDefault();
+        return;
+      }
+      form.zf_referrer_name.value = location.href;
+      pending = true;
+      form.setAttribute('aria-busy', 'true');
+      setButton('Sending…', true);
+      show('pending', 'Sending…', '', false);
+      if (window.fetch) {
+        e.preventDefault();
+        submitWithFetch();
+        return;
+      }
+      watchIframe();
     });
   })();
   </script>

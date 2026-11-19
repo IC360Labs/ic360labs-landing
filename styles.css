@@ -71,7 +71,8 @@ nav a:hover{color:#fff}
   .lead{font-size:1.05rem}
 }
 
-.contact-form{display:grid;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px}
+.contact-form{display:grid;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:28px;position:relative}
+.form-fields{display:grid;gap:14px;min-width:0}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .contact-form label{display:grid;gap:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#8b98ab}
 .contact-form input,.contact-form select,.contact-form textarea{font:inherit;font-size:.95rem;text-transform:none;letter-spacing:normal;color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:11px 13px}
@@ -84,7 +85,7 @@ nav a:hover{color:#fff}
 .logo{display:inline-flex;align-items:center;gap:10px}
 .logo-mark{width:auto;height:44px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.form-status{min-height:1.2em;font-size:.9rem;color:var(--accent)}
+.form-sink{position:fixed;left:0;bottom:0;width:160px;height:40px;border:0;opacity:0;pointer-events:none}
 .founder-mark img{width:72%;height:auto}
 
 /* 2026-10-10 polish */
@@ -125,3 +126,22 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* mobile overflow fix: let contact grid/inputs shrink */
 .contact>*,.form-row>*{min-width:0}
 .contact-form input,.contact-form select,.contact-form textarea{width:100%;min-width:0}
+/* Clear the sticky header (64px bar + border) when jumping to Contact. */
+#contact,#form-status{scroll-margin-top:80px}
+.contact-form.is-sent .form-fields{display:none}
+.form-result{margin:0}
+.form-result:not(.is-visible){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.form-result:focus{outline:none}
+.form-result:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.section-dark .form-result.is-visible{border-radius:12px;padding:16px 18px}
+.section-dark .form-result-success.is-visible{background:rgba(20,184,166,.14);border:1px solid rgba(20,184,166,.7)}
+.section-dark .form-result-error.is-visible{background:rgba(245,180,84,.12);border:1px solid rgba(245,180,84,.8)}
+.section-dark .form-result-pending.is-visible{background:transparent;border:0;padding:2px 0 0}
+.section-dark .form-result p{color:var(--accent);font-weight:700;font-size:1rem;line-height:1.45;letter-spacing:normal;text-transform:none;margin:0}
+.section-dark .form-result-success .form-result-title{font-size:1.05rem}
+.section-dark .form-result-success .form-result-title::before{content:"✓";display:inline-grid;place-items:center;width:1.35em;height:1.35em;margin-right:10px;border-radius:50%;background:var(--accent);color:#06201d;font-size:.8em;font-weight:800;vertical-align:-.15em}
+.section-dark .form-result-success .form-result-detail{color:#e7fffb;font-weight:600;margin-top:6px}
+.section-dark .form-result-error p{color:#f5b454}
+.section-dark .form-result-error .form-result-detail{font-weight:600;margin-top:6px}
+.form-again{margin-top:14px;background:transparent;color:var(--accent);border:1px solid rgba(20,184,166,.65);border-radius:999px;padding:8px 14px;font:inherit;font-size:.92rem;font-weight:700;cursor:pointer}
+.form-again:hover{background:rgba(20,184,166,.12)}
